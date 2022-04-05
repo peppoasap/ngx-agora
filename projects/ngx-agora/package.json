@@ -1,17 +1,17 @@
 {
-  "name": "ngx-agora",
-  "version": "2.0.1",
+  "name": "@lendingsolution/ngx-agora",
+  "version": "3.6.10",
   "schematics": "./schematics/collection.json",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
-    "agora-rtc-sdk": "^2.6.1"
+    "agora-rtc-sdk": "^3.6.10"
   },
-  "description": "Angular wrapper for Agora RTC client (https://www.agora.io/en/)",
+  "description": "Fork Updated Angular wrapper for Agora RTC client (https://www.agora.io/en/)(original by Drew Thompson)",
   "main": "ngx-agora.module.ts",
   "devDependencies": {
     "@angular/cdk": "^8.0.0",
-    "agora-rtc-sdk": "^3.0.2"
+    "agora-rtc-sdk": "^3.6.10"
   },
   "scripts": {
     "test": "test",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drew-thompson/ngx-agora.git"
+    "url": "git+https://github.com/peppoasap/ngx-agora.git"
   },
   "keywords": [
     "angular",
@@ -35,10 +35,10 @@
     "conferencing",
     "typescript"
   ],
-  "author": "Drew Thompson",
+  "author": "peppoasap(forked from Drew Thompson)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/drew-thompson/ngx-agora/issues"
+    "url": "https://github.com/peppoasap/ngx-agora/issues"
   },
-  "homepage": "https://github.com/drew-thompson/ngx-agora#readme"
+  "homepage": "https://github.com/peppoasap/ngx-agora#readme"
 }

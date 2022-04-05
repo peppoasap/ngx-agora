@@ -1,10 +1,14 @@
-import { AgoraClient } from './agora-client.model';
-import { ClientConfig } from './client-config.model';
-import { DesktopCapturerSource } from './desktop-capturer-source.model';
+import * as agoraSDK from 'agora-rtc-sdk';
+import {
+  Client,
+  ClientConfig,
+  DesktopCapturerSource,
+  MediaDeviceInfo,
+  MediaStream,
+  Stream,
+  StreamSpec,
+} from 'agora-rtc-sdk';
 import { Logger } from './logger.model';
-import { MediaStream } from './media-stream.model';
-import { StreamSpec } from './stream-spec.model';
-import { Stream } from './stream.model';
 
 /**
  * AgoraRTC is the entry point for all the methods that can be called in Agora Web SDK.
@@ -41,7 +45,7 @@ export interface AgoraRTC {
    * @example
    * AgoraRTC.createClient(config);
    */
-  createClient: (config: ClientConfig) => AgoraClient;
+  createClient: (config: ClientConfig) => Client;
   /**
    * This method creates and returns a stream object.
    *
@@ -63,7 +67,10 @@ export interface AgoraRTC {
    *   const id = devices[0].deviceId;
    * });
    */
-  getDevices: (callback: (devices: MediaDeviceInfo[]) => void) => void;
+  getDevices: (
+    callback: (devices: MediaDeviceInfo[]) => void,
+    callback_Error?: (errStr: string) => void
+  ) => void;
   /**
    * Gets the Sources for Screen-sharing
    *
@@ -79,7 +86,9 @@ export interface AgoraRTC {
    * }
    *
    */
-  getScreenSources: (callback: (sources: DesktopCapturerSource[]) => void) => void;
+  getScreenSources: (
+    callback: (sources: DesktopCapturerSource[]) => void
+  ) => void;
   /**
    * This method returns the codecs supported by both the Agora Web SDK and the web browser.
    * The Agora Web SDK supports VP8 and H.264 for video, and OPUS for audio.
@@ -110,9 +119,11 @@ export interface AgoraRTC {
    *     console.log(`Supported audio codec: ${result.audio.join(',')}`);
    *  });
    */
-  getSupportedCodec: (supportedCodecOptions?: { stream?: MediaStream }) => Promise<object>;
+  getSupportedCodec: (supportedCodecOptions?: {
+    stream?: MediaStream;
+  }) => Promise<object>;
   /**
    * Logs connection information and errors to the console during active periods of the Agora.io SDK.
    */
-  Logger: Logger;
+  Logger: typeof agoraSDK.Logger;
 }

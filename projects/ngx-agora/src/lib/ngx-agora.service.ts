@@ -1,15 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import * as agoraSDK from 'agora-rtc-sdk';
-
-import { AgoraClient } from './data/models/agora-client.model';
-import { AgoraConfig } from './data/models/agora-config.model';
-import { AgoraRTC, ClientConfig, MediaDeviceInfo, Stream, StreamSpec } from './data/models';
+import { AgoraConfig, AgoraRTC } from './data/models';
+import { ClientConfig, Stream, StreamSpec } from 'agora-rtc-sdk';
 
 /**
  * Provides access to the Agora web API, including the AgoraRTC and Client objects.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NgxAgoraService {
   private static AgoraRTC: AgoraRTC = agoraSDK;
@@ -18,7 +16,7 @@ export class NgxAgoraService {
    * The local Agora.io Client object.
    * @see [Web Client](https://docs.agora.io/en/Video/API%20Reference/web/interfaces/agorartc.client.html)
    */
-  client: AgoraClient;
+  client: agoraSDK.Client;
   /**
    * All audio devices collected from the AgoraRTC `getDevices()` method.
    * @see [getDevices()](https://docs.agora.io/en/Video/API%20Reference/web/globals.html#getdevices)
@@ -37,7 +35,7 @@ export class NgxAgoraService {
 
   constructor(@Inject('config') private config: AgoraConfig) {
     if (!this.checkSystemRequirements()) {
-      this.AgoraRTC.Logger.error('Web RTC is not supported in this browser');
+      // this.AgoraRTC.Logger.error('Web RTC is not supported in this browser');
     } else {
       this.collectDevices();
     }
@@ -81,8 +79,8 @@ export class NgxAgoraService {
     config: ClientConfig,
     autoInitializing: boolean = true,
     onSuccess?: () => void,
-    onFailure?: (error: Error) => void
-  ): AgoraClient {
+    onFailure?: (error: string) => void
+  ): agoraSDK.Client {
     this.client = this.AgoraRTC.createClient(config);
     if (autoInitializing) {
       this.init(this.config.AppID, onSuccess, onFailure);
@@ -132,7 +130,11 @@ export class NgxAgoraService {
    *     // Error handling
    * });
    */
-  init(appId: string, onSuccess?: () => void, onFailure?: (error: Error) => void): void {
+  init(
+    appId: string,
+    onSuccess?: () => void,
+    onFailure?: (error: string) => void
+  ): void {
     this.client.init(appId, onSuccess, onFailure);
   }
 
@@ -141,11 +143,11 @@ export class NgxAgoraService {
    */
   private collectDevices(): void {
     this.AgoraRTC.getDevices((devices: MediaDeviceInfo[]) => {
-      const audioDevices = devices.filter(device => {
+      const audioDevices = devices.filter((device) => {
         return device.kind === 'audioinput' && device.deviceId !== 'default';
       });
 
-      const videoDevices = devices.filter(device => {
+      const videoDevices = devices.filter((device) => {
         return device.kind === 'videoinput' && device.deviceId !== 'default';
       });
 

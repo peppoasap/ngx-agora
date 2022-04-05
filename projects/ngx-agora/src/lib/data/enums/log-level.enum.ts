@@ -3,13 +3,13 @@
  */
 export enum LogLevel {
   /** Outputs all logs. */
-  Debug,
+  Debug = 0,
   /** Outputs logs of the INFO, WARNING and ERROR levels. */
-  Info,
+  Info = 1,
   /** Outputs logs of the WARNING and ERROR levels. */
-  Warning,
+  Warning = 2,
   /** Outputs logs of the ERROR level. */
-  Error,
+  Error = 3,
   /** Outputs no logs. */
-  None
+  None = 4
 }
